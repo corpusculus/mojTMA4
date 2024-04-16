@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Telegram Mini Apps Vanilla JS Sample App</title>
+    <title>Moj TMA app</title>
     <style>
         body {
             --bg-color: var(--tg-theme-bg-color);
@@ -70,7 +70,6 @@
         <h1>Modals</h1>
         <button onclick="Telegram.WebApp.showAlert('Hello World!');">Launch Alert</button>
         <button onclick="showPopup();">Launch Popup</button>
-        <button onclick="sendPostRequest()">Send POST Request</button>
 
         <h1>Links</h1>
         <ul>
@@ -87,12 +86,13 @@
 
         <h1>Buttons</h1>
         <button onclick="Telegram.WebApp.expand();">Expand Webview</button>
+        <button onclick="sendPostRequest() ;">Toggle Main Button</button>
     </main>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         // Init TWA
         Telegram.WebApp.ready();
-
+        Telegram.WebApp.expand()
         // Event occurs whenever theme settings are changed in the user's Telegram app (including switching to night mode).
         Telegram.WebApp.onEvent('themeChanged', function() {
             document.documentElement.className = Telegram.WebApp.colorScheme;
@@ -103,7 +103,6 @@
             text: 'Main Button'
         });
         Telegram.WebApp.MainButton.onClick(function () {
-            sendPostRequest();
             Telegram.WebApp.showAlert('Main Button was clicked')
         });	
         Telegram.WebApp.MainButton.show();
@@ -123,7 +122,25 @@
                 }
             });
         };
-        function sendPostRequest() {
+
+        // Function to toggle main TWA button
+        function toggleMainButton() {
+            if (Telegram.WebApp.MainButton.isVisible) {
+                Telegram.WebApp.MainButton.hide();
+            } else {
+                Telegram.WebApp.MainButton.show();
+            }
+        };
+
+        function setViewportData() {
+            var sizeEl = document.getElementById('viewport-params-size');
+            sizeEl.innerText = 'width: ' + window.innerWidth + ' x ' + 
+                'height: ' + Telegram.WebApp.viewportStableHeight;
+
+            var expandEl = document.querySelector('#viewport-params-expand');
+            expandEl.innerText = 'Is Expanded: ' + (Telegram.WebApp.isExpanded ? 'true' : 'false');
+        }
+          function sendPostRequest() {
           const url = 'https://www.juntadeandalucia.es/educacion/sipri/plazas/buscarjson';
           const data = { // Replace with your data to send
             message: 'This is a message from the Telegram Mini App'
@@ -150,53 +167,35 @@
             });
         }
 
-        function displayDataInTable(data) {
-          const tableContainer = document.getElementById('data-table-container');
-          const table = document.createElement('table');
-          table.classList.add('data-table'); // Add a CSS class for styling (optional)
-    
-          // Create table header row
-          const headerRow = document.createElement('tr');
-          // Add table headers dynamically based on data object properties
-          for (const key in data[0]) {
-            const headerCell = document.createElement('th');
-            headerCell.textContent = key;
-            headerRow.appendChild(headerCell);
-          }
-          table.appendChild(headerRow);
-    
-          // Create data rows
-          for (const item of data) {
-            const dataRow = document.createElement('tr');
-            for (const key in item) {
-              const dataCell = document.createElement('td');
-              dataCell.textContent = item[key];
-              dataRow.appendChild(dataCell);
+            function displayDataInTable(data) {
+              const tableContainer = document.getElementById('data-table-container');
+              const table = document.createElement('table');
+              table.classList.add('data-table'); // Add a CSS class for styling (optional)
+        
+              // Create table header row
+              const headerRow = document.createElement('tr');
+              // Add table headers dynamically based on data object properties
+              for (const key in data[0]) {
+                const headerCell = document.createElement('th');
+                headerCell.textContent = key;
+                headerRow.appendChild(headerCell);
+              }
+              table.appendChild(headerRow);
+        
+              // Create data rows
+              for (const item of data) {
+                const dataRow = document.createElement('tr');
+                for (const key in item) {
+                  const dataCell = document.createElement('td');
+                  dataCell.textContent = item[key];
+                  dataRow.appendChild(dataCell);
+                }
+                table.appendChild(dataRow);
+              }
+        
+              tableContainer.innerHTML = ''; // Clear previous content (if any)
+              tableContainer.appendChild(table);
             }
-            table.appendChild(dataRow);
-          }
-    
-          tableContainer.innerHTML = ''; // Clear previous content (if any)
-          tableContainer.appendChild(table);
-        }
-        // Function to toggle main TWA button
-        function toggleMainButton() {
-            if (Telegram.WebApp.MainButton.isVisible) {
-                Telegram.WebApp.MainButton.hide();
-            } else {
-                Telegram.WebApp.MainButton.show();
-            }
-        };
-
-        function setViewportData() {
-            var sizeEl = document.getElementById('viewport-params-size');
-            sizeEl.innerText = 'width: ' + window.innerWidth + ' x ' + 
-                'height: ' + Telegram.WebApp.viewportStableHeight;
-
-            var expandEl = document.querySelector('#viewport-params-expand');
-            expandEl.innerText = 'Is Expanded: ' + (Telegram.WebApp.isExpanded ? 'true' : 'false');
-        }
-
         Telegram.WebApp.setHeaderColor('secondary_bg_color');
 
         //setViewportData();
