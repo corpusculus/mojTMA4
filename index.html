@@ -92,7 +92,6 @@
             <label for="message">Your Message:</label>
             <textarea id="message" name="message" required></textarea>
             <br>
-            <button type="button" onclick="submitData()">Send Data</button>
           </form>
         
         <h1>Buttons</h1>
@@ -116,6 +115,7 @@
         Telegram.WebApp.MainButton.onClick(function () {
             //sendPostRequest();
             submitData();
+            console.log("kkkkkkkkkkkkkkk");
             Telegram.WebApp.showAlert('Main Button was clicked')
         });	
         Telegram.WebApp.MainButton.show();
@@ -131,7 +131,7 @@
             name: name.trim(),
             message: message.trim()
           };
-        
+            console.log("GGGG");
           // Send data through framework's custom function
           sendData(processedData);
         }
