@@ -83,7 +83,18 @@
                 <a href="javascript:Telegram.WebApp.openLink('https://telegra.ph/api',{try_instant_view:true});">Open link inside Telegram webview</a>
             </li>
         </ul>
+        <h1>Send Data</h1>
 
+          <form id="data-form">
+            <label for="name">Your Name:</label>
+            <input type="text" id="name" name="name" required>
+            <br>
+            <label for="message">Your Message:</label>
+            <textarea id="message" name="message" required></textarea>
+            <br>
+            <button type="button" onclick="submitData()">Send Data</button>
+          </form>
+        
         <h1>Buttons</h1>
         <button onclick="Telegram.WebApp.expand();">Expand Webview</button>
         <button onclick="sendPostRequest();">Toggle Main Button</button>
@@ -103,10 +114,33 @@
             text: 'Main Button'
         });
         Telegram.WebApp.MainButton.onClick(function () {
-            sendPostRequest();
+            //sendPostRequest();
+            submitData();
             Telegram.WebApp.showAlert('Main Button was clicked')
         });	
         Telegram.WebApp.MainButton.show();
+        
+        // User clicks a button to submit data
+        function submitData() {
+          // Capture user input (e.g., from a form)
+          const name = document.getElementById("name").value;
+          const message = document.getElementById("message").value;
+        
+          // Process user input (validation, formatting, etc.)
+          const processedData = {
+            name: name.trim(),
+            message: message.trim()
+          };
+        
+          // Send data through framework's custom function
+          sendData(processedData);
+        }
+        
+        // Custom function (implementation depends on the framework)
+        function sendData(data) {
+          // ... (process data, prepare request, interact with Telegram Web App API)
+          Telegram.WebApp.sendData(JSON.stringify(data)); // Assuming the API uses JSON
+        }
 
         // Function to call showPopup API
         function showPopup() {
