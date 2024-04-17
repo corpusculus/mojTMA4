@@ -144,10 +144,9 @@
           Telegram.WebApp.sendData(JSON.stringify(data)); // Assuming the API uses JSON
         }
         function sendTime(spam) {
-            const repeat = spam ? 10 : 1;
-            for (let i = 0; i < repeat; i++) {
+           
                 Telegram.WebApp.sendData(new Date().toString());
-            }
+            
         }
     
         function requestLocation() {
