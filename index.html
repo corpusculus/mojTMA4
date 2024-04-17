@@ -96,7 +96,7 @@
         
         <h1>Buttons</h1>
         <button onclick="Telegram.WebApp.expand();">Expand Webview</button>
-        <button onclick="submitData();">submit</button>
+        <button onclick="submitData1();">submit</button>
         <button id="btnTime" onclick="sendTime();">Send time</button>
 
     </main>
@@ -116,7 +116,7 @@
         });
         Telegram.WebApp.MainButton.onClick(function () {
             //sendPostRequest();
-            submitData();
+            submitData1();
             console.log("kkkkkkkkkkkkkkk");
             Telegram.WebApp.showAlert('Main Button was clicked')
         });	
@@ -152,7 +152,7 @@
           // ... (process data, prepare request, interact with Telegram Web App API)
           Telegram.WebApp.sendData(JSON.stringify(data)); // Assuming the API uses JSON
         }
-        function sendData1(data) {
+        function submitData1() {
           // ... (process data, prepare request, interact with Telegram Web App API)
             const name = document.getElementById("name").value;
           const message = document.getElementById("message").value;
