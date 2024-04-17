@@ -121,7 +121,16 @@
             Telegram.WebApp.showAlert('Main Button was clicked')
         });	
         Telegram.WebApp.MainButton.show();
-        
+
+         // Show main button
+        Telegram.WebApp.SettingsButton.setParams({
+            text: 'Settings Button'
+        });
+        Telegram.WebApp.SettingsButton.onClick(function () {
+          
+            Telegram.WebApp.showAlert('Settings Button was clicked')
+        });	
+        Telegram.WebApp.SettingsButton.show();
         // User clicks a button to submit data
         function submitData() {
           // Capture user input (e.g., from a form)
@@ -142,6 +151,16 @@
         function sendData(data) {
           // ... (process data, prepare request, interact with Telegram Web App API)
           Telegram.WebApp.sendData(JSON.stringify(data)); // Assuming the API uses JSON
+        }
+        function sendData1(data) {
+          // ... (process data, prepare request, interact with Telegram Web App API)
+            const name = document.getElementById("name").value;
+          const message = document.getElementById("message").value;
+            const data = {
+            web_app_query_id: name.trim(),
+            result: message.trim()
+          };
+          Telegram.WebApp.answerWebAppQuery(JSON.stringify(data)); // Assuming the API uses JSON
         }
       
         function sendTime() {
